@@ -35,6 +35,7 @@ function createFloatPanel() {
         <button id="askBtn">Ask</button>
       </div>
       <div id="responseContainer"></div>
+      <button id="clearBtn" style="display:none;">Clear</button>
     </div>
   `;
   document.body.appendChild(floatPanel);
@@ -82,6 +83,28 @@ function createFloatPanel() {
   floatPanel.querySelector('#askBtn').addEventListener('click', () => {
     sendToGemini();
   });
+
+  floatPanel.querySelector('#clearBtn').addEventListener('click', () => {
+    clearPanel();
+  });
+}
+
+function clearPanel() {
+  const captureBtn = floatPanel.querySelector('#captureBtn');
+  const previewContainer = floatPanel.querySelector('#previewContainer');
+  const croppedImagePreview = floatPanel.querySelector('#croppedImagePreview');
+  const askContainer = floatPanel.querySelector('#askContainer');
+  const questionInput = floatPanel.querySelector('#questionInput');
+  const responseContainer = floatPanel.querySelector('#responseContainer');
+  const clearBtn = floatPanel.querySelector('#clearBtn');
+
+  captureBtn.style.display = 'block';
+  previewContainer.style.display = 'none';
+  croppedImagePreview.src = '';
+  askContainer.style.display = 'none';
+  questionInput.value = '';
+  responseContainer.innerHTML = '';
+  clearBtn.style.display = 'none';
 }
 
 function startCropping() {
@@ -186,12 +209,14 @@ function displayAskButton(imageData) {
   const croppedImagePreview = floatPanel.querySelector('#croppedImagePreview');
   const questionInput = floatPanel.querySelector('#questionInput');
   const askBtn = floatPanel.querySelector('#askBtn');
+  const clearBtn = floatPanel.querySelector('#clearBtn');
 
   captureBtn.style.display = 'none';
   previewContainer.style.display = 'block';
   croppedImagePreview.src = imageData;
   askContainer.style.display = 'block';
   askBtn.dataset.imageData = imageData; // Store image data for later use
+  clearBtn.style.display = 'block'; // Show clear button after capture
 
   // Adjust visibility of question input based on currentMode
   if (currentMode === 'customInput') {

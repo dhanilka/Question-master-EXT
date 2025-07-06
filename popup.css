@@ -1,23 +1,97 @@
 body {
-  font-family: Arial, sans-serif;
-  width: 200px;
-  padding: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 280px; /* Slightly wider for better layout */
+  padding: 20px;
+  background-color: #f4f7f6; /* Light background */
+  color: #333;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 h1 {
-  font-size: 1.2em;
+  font-size: 1.5em;
+  color: #2c3e50; /* Darker blue for heading */
+  text-align: center;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 15px;
+}
+
+.mode-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between radio buttons */
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.mode-selection label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.95em;
+  color: #555;
+  transition: color 0.2s ease-in-out;
+}
+
+.mode-selection label:hover {
+  color: #007bff;
+}
+
+.mode-selection input[type="radio"] {
+  margin-right: 10px;
+  /* Custom radio button styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.mode-selection input[type="radio"]:checked {
+  border-color: #007bff;
+  background-color: #007bff;
+}
+
+.mode-selection input[type="radio"]:checked::before {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  margin: 3px; /* Center the inner circle */
+  background-color: #ffffff;
+  border-radius: 50%;
 }
 
 button {
   width: 100%;
-  padding: 10px;
-  background-color: #4CAF50;
+  padding: 12px 15px;
+  background-color: #007bff; /* Primary blue */
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  box-shadow: 0 3px 6px rgba(0, 123, 255, 0.2);
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: translateY(-1px); /* Slight lift effect */
+}
+
+button:active {
+  background-color: #004085; /* Even darker on click */
+  transform: translateY(0); /* Reset lift */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }

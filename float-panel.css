@@ -2,73 +2,109 @@
   position: fixed;
   top: 100px;
   left: 100px;
-  width: 350px;
-  min-height: 200px;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 380px; /* Slightly wider for better content display */
+  min-height: 250px;
+  background-color: #ffffff; /* Clean white background */
+  border: 1px solid #e0e0e0;
+  border-radius: 12px; /* More rounded corners */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Deeper, softer shadow */
   z-index: 9999;
   display: flex;
   flex-direction: column;
   resize: both;
-  overflow: auto;
+  overflow: hidden; /* Hide overflow for rounded corners */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
 
 #question-master-float-panel .header {
   cursor: grab;
-  padding: 8px;
-  background-color: #f0f0f0;
-  border-bottom: 1px solid #ccc;
+  padding: 10px 15px; /* More padding */
+  background-color: #f8f9fa; /* Light grey header */
+  border-bottom: 1px solid #e9ecef;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 
 #question-master-float-panel .header button {
   background: none;
   border: none;
-  font-size: 1.2em;
+  font-size: 1.3em; /* Slightly larger close button */
+  color: #6c757d; /* Muted color for close button */
   cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+#question-master-float-panel .header button:hover {
+  background-color: #e9ecef;
+  color: #333;
 }
 
 #question-master-float-panel .content {
-  padding: 15px;
+  padding: 20px; /* Increased padding for content */
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  gap: 15px; /* Space between elements */
 }
 
 #question-master-float-panel button {
-  padding: 8px 12px;
-  background-color: #007bff;
+  padding: 10px 15px;
+  background-color: #007bff; /* Primary blue */
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px; /* More rounded buttons */
   cursor: pointer;
-  margin-top: 10px;
+  font-size: 1em;
+  font-weight: 600;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out, box-shadow 0.2s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
 }
 
 #question-master-float-panel button:hover {
-  background-color: #0056b3;
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: translateY(-1px); /* Subtle lift effect */
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+}
+
+#question-master-float-panel button:active {
+  background-color: #004085; /* Even darker on click */
+  transform: translateY(0); /* Reset lift */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 #question-master-float-panel textarea {
-  width: 100%;
-  min-height: 60px;
-  margin-top: 10px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  width: calc(100% - 20px); /* Account for padding */
+  min-height: 80px; /* Taller textarea */
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
   resize: vertical;
+  font-size: 0.95em;
+  line-height: 1.5;
+  color: #495057;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+#question-master-float-panel textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: none;
 }
 
 #question-master-float-panel #responseContainer {
-  margin-top: 15px;
-  padding: 10px;
-  background-color: #e9ecef;
-  border-radius: 4px;
-  min-height: 50px;
+  margin-top: 10px;
+  padding: 15px;
+  background-color: #e9ecef; /* Light grey background for response */
+  border-radius: 8px;
+  min-height: 60px;
   overflow-y: auto;
+  border: 1px solid #dee2e6;
+  color: #495057;
+  line-height: 1.6;
 }
 
 #question-master-crop-overlay {
@@ -77,13 +113,29 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6); /* Slightly darker overlay */
   z-index: 10000;
   cursor: crosshair;
 }
 
 #question-master-crop-area {
   border: 2px dashed #007bff;
-  background-color: rgba(0, 123, 255, 0.2);
+  background-color: rgba(0, 123, 255, 0.25); /* Slightly more opaque */
   position: absolute;
+}
+
+/* Specific styling for the Clear button */
+#question-master-float-panel #clearBtn {
+  background-color: #6c757d; /* Muted grey for clear button */
+  box-shadow: 0 4px 10px rgba(108, 117, 125, 0.2);
+}
+
+#question-master-float-panel #clearBtn:hover {
+  background-color: #5a6268;
+  box-shadow: 0 6px 12px rgba(108, 117, 125, 0.3);
+}
+
+#question-master-float-panel #clearBtn:active {
+  background-color: #495057;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
