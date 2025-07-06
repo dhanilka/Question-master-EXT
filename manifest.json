@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Question Master",
+  "version": "1.0",
+  "description": "Get AI-powered answers from any website.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "http://localhost:3000/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["float-panel.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["float-panel.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
