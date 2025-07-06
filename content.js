@@ -2,10 +2,13 @@ let floatPanel = null;
 let cropOverlay = null;
 let startX, startY, endX, endY;
 
+let currentMode = 'onlyAnswer'; // Default mode
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log('Message received in content.js:', request.action);
   if (request.action === 'activateFloatMode') {
     console.log('Activating float mode...');
+    currentMode = request.mode; // Update currentMode from popup
     if (!floatPanel) {
       createFloatPanel();
       console.log('Float panel created.');
@@ -27,7 +30,7 @@ function createFloatPanel() {
       <div id="previewContainer" style="display:none;">
         <img id="croppedImagePreview" style="max-width:100%; height:auto;" />
       </div>
-      <div id="askContainer" style="display:none;">
+      <div id="askContainer">
         <textarea id="questionInput" placeholder="Ask your question..."></textarea>
         <button id="askBtn">Ask</button>
       </div>
@@ -35,6 +38,14 @@ function createFloatPanel() {
     </div>
   `;
   document.body.appendChild(floatPanel);
+
+  // Initial state of questionInput based on currentMode
+  const questionInput = floatPanel.querySelector('#questionInput');
+  if (currentMode !== 'customInput') {
+    questionInput.style.display = 'none';
+  } else {
+    questionInput.style.display = 'block';
+  }
 
   // Make the panel draggable
   const header = floatPanel.querySelector('.header');
@@ -173,6 +184,7 @@ function displayAskButton(imageData) {
   const askContainer = floatPanel.querySelector('#askContainer');
   const previewContainer = floatPanel.querySelector('#previewContainer');
   const croppedImagePreview = floatPanel.querySelector('#croppedImagePreview');
+  const questionInput = floatPanel.querySelector('#questionInput');
   const askBtn = floatPanel.querySelector('#askBtn');
 
   captureBtn.style.display = 'none';
@@ -180,6 +192,13 @@ function displayAskButton(imageData) {
   croppedImagePreview.src = imageData;
   askContainer.style.display = 'block';
   askBtn.dataset.imageData = imageData; // Store image data for later use
+
+  // Adjust visibility of question input based on currentMode
+  if (currentMode === 'customInput') {
+    questionInput.style.display = 'block';
+  } else {
+    questionInput.style.display = 'none';
+  }
 }
 
 function sendToGemini() {
@@ -188,16 +207,48 @@ function sendToGemini() {
   const responseContainer = floatPanel.querySelector('#responseContainer');
 
   const imageData = askBtn.dataset.imageData;
-  const question = questionInput.value;
+  let question = '';
 
-  if (!imageData || !question) {
-    alert('Please capture an image and ask a question.');
+  if (!imageData) {
+    alert('Please capture an image.');
     return;
+  }
+
+  switch (currentMode) {
+    case 'onlyAnswer':
+      question = 'Give only the answer.';
+      break;
+    case 'answerWithExplanation':
+      question = 'Give a 30-word explanation with the answer. Answer is mandatory.';
+      break;
+    case 'customInput':
+      question = questionInput.value;
+      if (!question) {
+        alert('Please enter your question.');
+        return;
+      }
+      break;
+  }
+
+  switch (currentMode) {
+    case 'onlyAnswer':
+      question = 'Give only the answer.';
+      break;
+    case 'answerWithExplanation':
+      question = 'Give a 30-word explanation with the answer. Answer is mandatory.';
+      break;
+    case 'customInput':
+      question = questionInput.value;
+      if (!question) {
+        alert('Please enter your question.');
+        return;
+      }
+      break;
   }
 
   responseContainer.innerHTML = 'Loading...';
 
-  chrome.runtime.sendMessage({ action: 'sendToGemini', imageData: imageData, question: question }, (response) => {
+  chrome.runtime.sendMessage({ action: 'sendToGemini', imageData: imageData, question: question, mode: currentMode }, (response) => {
     if (response.response) {
       responseContainer.innerHTML = response.response;
     } else if (response.error) {

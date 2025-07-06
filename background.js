@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ imageData: request.imageData, question: request.question }),
+      body: JSON.stringify({ imageData: request.imageData, question: request.question, mode: request.mode }),
     })
     .then(response => response.json())
     .then(data => sendResponse({ response: data.response }))
